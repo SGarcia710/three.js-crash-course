@@ -20,6 +20,18 @@
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
     
+    // making the scene responsive responsive
+    window.addEventListener( 'resize', function( )
+    {
+      // making the responsive size  
+      var width = window.innerWidth;
+      var height = window.innerHeight;
+      renderer.setSize( width, height ); 
+      // updating the aspect ratio to avoid the deformation of the object
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix( );
+    } )
+    
     // create the shape
     var geometry = new THREE.BoxGeometry( 1, 1, 1 );
 
