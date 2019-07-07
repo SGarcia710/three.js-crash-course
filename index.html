@@ -40,36 +40,175 @@
     var geometry = new THREE.BoxGeometry( 1, 1, 1 );
     var cubeMaterials = 
     [
-      new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader( ).load( 'img/1.jpg' ), side: THREE.DoubleSide } ), // RIGHT SIDE
-      new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader( ).load( 'img/1.jpg' ), side: THREE.DoubleSide } ), // LEFT SIDE
-      new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader( ).load( 'img/1.jpg' ), side: THREE.DoubleSide } ), // TOP SIDE
-      new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader( ).load( 'img/1.jpg' ), side: THREE.DoubleSide } ), // BOTTOM SIDE
-      new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader( ).load( 'img/1.jpg' ), side: THREE.DoubleSide } ), // FRONT SIDE
-      new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader( ).load( 'img/1.jpg' ), side: THREE.DoubleSide } ), // BACK SIDE
-    ]
+      new THREE.MeshLambertMaterial( { map: new THREE.TextureLoader( ).load( 'img/1.jpg' ), side: THREE.DoubleSide } ), // RIGHT SIDE
+      new THREE.MeshLambertMaterial( { map: new THREE.TextureLoader( ).load( 'img/1.jpg' ), side: THREE.DoubleSide } ), // LEFT SIDE
+      new THREE.MeshLambertMaterial( { map: new THREE.TextureLoader( ).load( 'img/1.jpg' ), side: THREE.DoubleSide } ), // TOP SIDE
+      new THREE.MeshLambertMaterial( { map: new THREE.TextureLoader( ).load( 'img/1.jpg' ), side: THREE.DoubleSide } ), // BOTTOM SIDE
+      new THREE.MeshLambertMaterial( { map: new THREE.TextureLoader( ).load( 'img/1.jpg' ), side: THREE.DoubleSide } ), // FRONT SIDE
+      new THREE.MeshLambertMaterial( { map: new THREE.TextureLoader( ).load( 'img/1.jpg' ), side: THREE.DoubleSide } ), // BACK SIDE
+    ];
     var cubeColors = 
     [
-      new THREE.MeshBasicMaterial( { color: 0xFFFFFF, side: THREE.BackSide } ), // RIGHT SIDE
-      new THREE.MeshBasicMaterial( { color: 0xFFF000, side: THREE.FrontSide } ), // LEFT SIDE
+      // new THREE.MeshBasicMaterial( { color: 0xFFFFFF, side: THREE.BackSide } ), // RIGHT SIDE
+      new THREE.MeshBasicMaterial( { color: 0xFFFFFF, side: THREE.DoubleSide } ), // RIGHT SIDE
+      // new THREE.MeshBasicMaterial( { color: 0xFFF000, side: THREE.FrontSide } ), // LEFT SIDE
+      new THREE.MeshBasicMaterial( { color: 0xFFF000, side: THREE.DoubleSide } ), // LEFT SIDE
       new THREE.MeshBasicMaterial( { color: 0x123291, side: THREE.DoubleSide } ), // TOP SIDE
       new THREE.MeshBasicMaterial( { color: 0x111333, side: THREE.DoubleSide } ), // BOTTOM SIDE
       new THREE.MeshBasicMaterial( { color: 0x123123, side: THREE.DoubleSide } ), // FRONT SIDE
       new THREE.MeshBasicMaterial( { color: 0x242424, side: THREE.DoubleSide } ), // BACK SIDE
-    ]
+    ];
+    var cubeColorsTwo = 
+    [
+      new THREE.MeshLambertMaterial( { color: 0xFFFFFF, side: THREE.DoubleSide } ), // RIGHT SIDE
+      new THREE.MeshPhongMaterial( { color: 0xFFF000, side: THREE.DoubleSide } ), // LEFT SIDE
+      new THREE.MeshLambertMaterial( { color: 0x123291, side: THREE.DoubleSide } ), // TOP SIDE
+      new THREE.MeshPhongMaterial( { color: 0x111333, side: THREE.DoubleSide } ), // BOTTOM SIDE
+      new THREE.MeshLambertMaterial( { color: 0x123123, side: THREE.DoubleSide } ), // FRONT SIDE
+      new THREE.MeshPhongMaterial( { color: 0x242424, side: THREE.DoubleSide } ), // BACK SIDE
+    ];
+
+    /* NOTE
+    MeshBasicMaterial doesnt need light to be seen
+    Lambert and Phong needs light to be seen
+    */
 
     // create a material, color or image texture
     // var material = new THREE.MeshBasicMaterial( { color: 0xFFFFFF, wireframe: true } );
-    var material = new THREE.MeshFaceMaterial( cubeColors );
-    var cube = new THREE.Mesh( geometry, material );
+    // var material = new THREE.MeshFaceMaterial( cubeMaterials ); this line adds the materials in the array for individual textures in each cube's faces.
+    var cubeMaterial = new THREE.MeshLambertMaterial( { map: new THREE.TextureLoader( ).load( 'img/diamond.jpg' ), side: THREE.DoubleSide } );
+    var cube = new THREE.Mesh( geometry, cubeMaterial );
     scene.add( cube );
 
-    camera.position.z = 3;
+    camera.position.z = 4;
+
+    // Floor
+    var floorGeometry = new THREE.CubeGeometry( 10, 1, 10);
+    var floorMaterial = new THREE.MeshLambertMaterial( { map: new THREE.TextureLoader( ).load( 'img/floor.jpg' ), side: THREE.DoubleSide } );
+    var floorCube = new THREE.Mesh( floorGeometry, floorMaterial );
+    floorCube.position.y = -5;
+    scene.add( floorCube );
+
+    // back Wall
+    var backWallGeometry = new THREE.CubeGeometry( 10, 10, 1 );
+    var backWallMaterial = new THREE.MeshLambertMaterial( { map: new THREE.TextureLoader( ).load( 'img/wall.jpg' ), side: THREE.DoubleSide } ); 
+    var backWallCube = new THREE.Mesh( backWallGeometry, backWallMaterial );
+    backWallCube.position.z = -5;
+    scene.add( backWallCube );
+    // front Wall
+    var frontWallGeometry = new THREE.CubeGeometry( 10, 10, 1 );
+    var frontWallMaterial = new THREE.MeshLambertMaterial( { map: new THREE.TextureLoader( ).load( 'img/wall.jpg' ), side: THREE.DoubleSide } ); 
+    var frontWallCube = new THREE.Mesh( frontWallGeometry, frontWallMaterial );
+    frontWallCube.position.z = 5;
+    scene.add( frontWallCube );
+    // left Wall
+    var leftWallGeometry = new THREE.CubeGeometry( 1, 10, 10 );
+    var leftWallMaterial = new THREE.MeshLambertMaterial( { map: new THREE.TextureLoader( ).load( 'img/wall.jpg' ), side: THREE.DoubleSide } ); 
+    var leftWallCube = new THREE.Mesh( leftWallGeometry, leftWallMaterial );
+    leftWallCube.position.x = -5;
+    scene.add( leftWallCube );
+    // right Wall
+    var rightWallGeometry = new THREE.CubeGeometry( 1, 10, 10 );
+    var rightWallMaterial = new THREE.MeshLambertMaterial( { map: new THREE.TextureLoader( ).load( 'img/wall.jpg' ), side: THREE.DoubleSide } ); 
+    var rightWallCube = new THREE.Mesh( rightWallGeometry, rightWallMaterial );
+    rightWallCube.position.x = 5;
+    scene.add( rightWallCube );
+
+    // ceiling 
+    var ceilingWallGeometry = new THREE.CubeGeometry( 10, 1, 10 );
+    var ceilingWallMaterial = new THREE.MeshLambertMaterial( { map: new THREE.TextureLoader( ).load( 'img/ceil.jpg' ), side: THREE.DoubleSide } ); 
+    var ceilingWallCube = new THREE.Mesh( ceilingWallGeometry, ceilingWallMaterial );
+    ceilingWallCube.position.y = 5;
+    scene.add( ceilingWallCube );
+
+    // Camera Objects
+    var cameraGeometry1 = new THREE.SphereGeometry( 5, 32, 32 );
+    var cameraMaterial1 = new THREE.MeshLambertMaterial( { color: 0xFF0040, side: THREE.DoubleSide } )
+    var cameraCircle1 = new THREE.Mesh ( cameraGeometry1, cameraMaterial1 );
+    scene.add( cameraCircle1 );
+
+    var cameraGeometry2 = new THREE.SphereGeometry( 5, 32, 32 );
+    var cameraMaterial2 = new THREE.MeshLambertMaterial( { color: 0x0040FF, side: THREE.DoubleSide } )
+    var cameraCircle2 = new THREE.Mesh ( cameraGeometry2, cameraMaterial2 );
+    scene.add( cameraCircle2 );
+
+    var cameraGeometry3 = new THREE.SphereGeometry( 5, 32, 32 );
+    var cameraMaterial3 = new THREE.MeshLambertMaterial( { color: 0x80FF80, side: THREE.DoubleSide } )
+    var cameraCircle3 = new THREE.Mesh ( cameraGeometry3, cameraMaterial3 );
+    scene.add( cameraCircle3 );
+
+    var cameraGeometry4 = new THREE.SphereGeometry( 1, 55, 55 );
+    var cameraMaterial4 = new THREE.MeshLambertMaterial( { color: 0xFFFFFF, side: THREE.DoubleSide } )
+    var cameraCircle4 = new THREE.Mesh ( cameraGeometry4, cameraMaterial4 );
+    // scene.add( cameraCircle4 );
+
+
+
+    // lights
+
+    // Ambient Light
+    var ambientLight = new THREE.AmbientLight( 0xFFFFFF, .9 );
+    scene.add( ambientLight );
+
+    // Point Light
+    var pointLight1 = new THREE.PointLight( 0xFF0040, 4, 50 );
+    scene.add( pointLight1 )
+
+    var pointLight2 = new THREE.PointLight( 0x0040FF, 2, 50 );
+   scene.add( pointLight2 )
+
+    var pointLight3 = new THREE.PointLight( 0x80FF80, 4, 50 );
+   scene.add( pointLight3 )
+
+    // Directional Light
+    var directionalLight = new THREE.DirectionalLight( 0xFFFFFF, 1 );
+    directionalLight.position.set( 0, 1, 0 );
+    cameraCircle4.position.set( 0, 10, 0 );
+    // scene.add( directionalLight );
+
+    // Spot Light (like a cone)
+    var spotLight = new THREE.SpotLight( 0xFF45F6, 25 );
+    spotLight.position.set( 0, 3, 0 );
+    // scene.add( spotLight );
 
     // game logic
     var update = function ( )
     {
-      // cube.rotation.x += 0.01;
-      // cube.rotation.y += 0.005;
+      cube.rotation.x += 0.01;
+      cube.rotation.y += 0.005;
+
+      var time = Date.now( ) * 0.0005;
+      
+      var values = 
+      [ 
+        [ Math.sin( time * 0.7 ) * 30, Math.cos( time * 0.5 ) * 40, Math.cos( time * 0.3 ) * 30 ],
+        [ Math.cos( time * 0.3 ) * 30, Math.sin( time * 0.5 ) * 40, Math.sin( time * 0.7 ) * 30 ],
+        [ Math.sin( time * 0.7 ) * 30, Math.cos( time * 0.3 ) * 40, Math.sin( time * 0.5 ) * 30 ]
+      ]
+
+      pointLight1.position.x = values[0][0];
+      pointLight1.position.y = values[0][1];
+      pointLight1.position.z = values[0][2];
+
+      cameraCircle1.position.x = values[0][0];
+      cameraCircle1.position.y = values[0][1];
+      cameraCircle1.position.z = values[0][2];
+      
+      pointLight2.position.x = values[1][0];
+      pointLight2.position.y = values[1][1];
+      pointLight2.position.z = values[1][2];
+
+      cameraCircle2.position.x = values[1][0];
+      cameraCircle2.position.y = values[1][1];
+      cameraCircle2.position.z = values[1][2];
+
+      pointLight3.position.x = values[2][0];
+      pointLight3.position.y = values[2][1];
+      pointLight3.position.z = values[2][2];
+
+      cameraCircle3.position.x = values[2][0];
+      cameraCircle3.position.y = values[2][1];
+      cameraCircle3.position.z = values[2][2];
     };
 
     // draw scene
