@@ -38,9 +38,28 @@
     
     // create the shape
     var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+    var cubeMaterials = 
+    [
+      new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader( ).load( 'img/1.jpg' ), side: THREE.DoubleSide } ), // RIGHT SIDE
+      new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader( ).load( 'img/1.jpg' ), side: THREE.DoubleSide } ), // LEFT SIDE
+      new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader( ).load( 'img/1.jpg' ), side: THREE.DoubleSide } ), // TOP SIDE
+      new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader( ).load( 'img/1.jpg' ), side: THREE.DoubleSide } ), // BOTTOM SIDE
+      new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader( ).load( 'img/1.jpg' ), side: THREE.DoubleSide } ), // FRONT SIDE
+      new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader( ).load( 'img/1.jpg' ), side: THREE.DoubleSide } ), // BACK SIDE
+    ]
+    var cubeColors = 
+    [
+      new THREE.MeshBasicMaterial( { color: 0xFFFFFF, side: THREE.BackSide } ), // RIGHT SIDE
+      new THREE.MeshBasicMaterial( { color: 0xFFF000, side: THREE.FrontSide } ), // LEFT SIDE
+      new THREE.MeshBasicMaterial( { color: 0x123291, side: THREE.DoubleSide } ), // TOP SIDE
+      new THREE.MeshBasicMaterial( { color: 0x111333, side: THREE.DoubleSide } ), // BOTTOM SIDE
+      new THREE.MeshBasicMaterial( { color: 0x123123, side: THREE.DoubleSide } ), // FRONT SIDE
+      new THREE.MeshBasicMaterial( { color: 0x242424, side: THREE.DoubleSide } ), // BACK SIDE
+    ]
 
     // create a material, color or image texture
-    var material = new THREE.MeshBasicMaterial( { color: 0xFFFFFF, wireframe: true } );
+    // var material = new THREE.MeshBasicMaterial( { color: 0xFFFFFF, wireframe: true } );
+    var material = new THREE.MeshFaceMaterial( cubeColors );
     var cube = new THREE.Mesh( geometry, material );
     scene.add( cube );
 
